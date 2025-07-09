@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import style from './App.module.scss';
 import Card from './components/Card';
 import Formulario from './components/Formulario';
@@ -6,6 +6,7 @@ import { IEvento } from './interfaces/IEvento';
 import Calendario from './components/Calendario';
 import ListaDeEventos from './components/ListaDeEventos';
 import {RecoilRoot} from 'recoil';
+import DebugObserver from './components/DebugObserver';
 
 
 function App() {
@@ -59,9 +60,11 @@ function App() {
   //     filtro!.toISOString().slice(0, 10) === evento.inicio.toISOString().slice(0, 10)
   //   );
 
+  // SUSPENSE está sendo utilizado por conta od seletor padrao e eventos async , recurso do react é exibido enquanto a requisicao está sendo feita
   return (
     <RecoilRoot>
-
+      <DebugObserver /> 
+      <Suspense fallback={<div>Está Carregando...</div>}>
     <div className={style.App}>
       <div className={style.Coluna}>
         <Card>
@@ -78,6 +81,9 @@ function App() {
         <Calendario  />
       </div>
     </div>
+      
+      </Suspense>
+
     </RecoilRoot>
 
   );
